@@ -1,6 +1,7 @@
 package com.beauty.pro.ia.agendamento.services;
 
 import com.beauty.pro.ia.agendamento.entities.User;
+import com.beauty.pro.ia.agendamento.enums.UserRole;
 import com.beauty.pro.ia.agendamento.repositories.UserRepository;
 import com.beauty.pro.ia.agendamento.services.exceptions.DatabaseException;
 import com.beauty.pro.ia.agendamento.services.exceptions.ResourceNotFoundException;
@@ -34,7 +35,16 @@ public class UserService {
 
     public User insert(User user) {
 
-        // Aplica hash na senha ANTES de salvar
+        // Se o role não vier na requisição, define USER como padrão
+        if (user.getUserRole() == null) {
+            user.setUserRole(2); // <-- padrão 2
+        }
+
+        if (user.getUserPlan() == null) {
+            user.setUserPlan(1); // <-- padrão 2
+        }
+
+        // Hash da senha
         if (user.getPassword_hash() != null && !user.getPassword_hash().isBlank()) {
             user.setPassword_hash(passwordEncoder.encode(user.getPassword_hash()));
         }
