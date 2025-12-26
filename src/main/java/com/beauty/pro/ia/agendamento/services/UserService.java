@@ -36,12 +36,9 @@ public class UserService {
     public User insert(User user) {
 
         // Se o role não vier na requisição, define USER como padrão
-        if (user.getUserRole() == null) {
+        if (user.getUserRole() == null || user.getUserPlan() == null) {
             user.setUserRole(2); // <-- padrão 2
-        }
-
-        if (user.getUserPlan() == null) {
-            user.setUserPlan(1); // <-- padrão 2
+            user.setUserPlan(1); // <-- padrão 1
         }
 
         // Hash da senha
